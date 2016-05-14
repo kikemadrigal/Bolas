@@ -31,6 +31,7 @@ public class Juego extends Game {
         assetManager.load("bolas/yellow.png", Texture.class);
         assetManager.load("bolas/yellow.png", Texture.class);
         assetManager.load("bolas/selecionada2.png", Texture.class);
+        assetManager.load("puntuacion_grande.png", Texture.class);
         assetManager.finishLoading();
 
         /**Este es el método que hay creado abajo del todo para añadir pantallas*/

@@ -1,6 +1,7 @@
 package es.tipolisto.bolas.modelo;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -27,6 +28,7 @@ public class Nivel2 extends PantallaAbstracta {
         stage=new Stage(viewport, juego.spriteBatch);
         stage.setDebugAll(true);
         partida=new Partida(7);
+
         partida.generarPartida();
         Gdx.input.setInputProcessor(stage);
         stage.addActor(partida);
@@ -52,6 +54,9 @@ public class Nivel2 extends PantallaAbstracta {
 
     @Override
     public void render(float delta) {
+        Gdx.gl.glClearColor(0, 0, 0, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
         stage.draw();
         stage.act();
     }

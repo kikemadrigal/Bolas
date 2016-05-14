@@ -1,5 +1,6 @@
 package es.tipolisto.bolas.modelo.modelo;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Group;
 
@@ -21,7 +22,13 @@ public class Partida extends Group{
     public Partida(int tamanio){
         this.tamanio=tamanio;
         this.puntuacion=new Puntuacion();
+        this.puntuacion.setPosition(50, Gdx.graphics.getHeight());
+        //this.puntuacion.setSize(Gdx.graphics.getWidth(),80);
+        //this.puntuacion.setBounds(50,250,300,20);
+        addActor(puntuacion);
+        float tamanioTablero=Gdx.graphics.getWidth()/tamanio;
         arrayBolas=new Bola[tamanio][tamanio];
+
         arrayListTodasLasBolas=new ArrayList<Bola>();
         for (int y=0; y<tamanio; y++){
             for(int x=0;x<tamanio;x++){
@@ -32,26 +39,57 @@ public class Partida extends Group{
                 //arrayBolas[x][y].setPosition(50*x, 50*y);
                 //arrayBolas[x][y].setSize(50,50);
                 // No es necesario llamar a los 2 métdos anteriores con este basta
-                arrayBolas[x][y].setBounds(50*x, 50*y, 50,50);
+               // arrayBolas[x][y].setBounds(50*x, 50*y, 50,50);
+                arrayBolas[x][y].setBounds(tamanioTablero*x, tamanioTablero*y, tamanioTablero,tamanioTablero);
             }
         }
     }
+
+
+
+
+
+
+    //Controlamos y hacemos estas acciones cuando las bolas seleccionadas sean 4
     private int cuantasBolasTocadas=0;
     public void bolaSeleccionada(Bola bola){
+        if(!bola.isBolaSeleccionada()){
+            cuantasBolasTocadas--;
+            return;
+        }
         if(++cuantasBolasTocadas==4){
             // TODO: Procesar todas las bolas tocadas
+            //Primero obtenemos las bolas que tienen su atributo bola.seleccionada a true.
             List<Bola> arrayListBolasSeleccionadas=getBolasSeleccionadas();
-            boolean validadasBolasDelMismoColor=comprobarSiTodasLasBolasSOnDelMismoColor(arrayListBolasSeleccionadas);
-            System.out.println(validadasBolasDelMismoColor ? "Son validas" : "No son validas");
+           /* boolean validadasBolasDelMismoColor=comprobarSiTodasLasBolasSOnDelMismoColor(arrayListBolasSeleccionadas);
+            System.out.println(validadasBolasDelMismoColor ? "Son validas son del mismo color" : "No son validas no son del mismo color");*/
+
 
             Set<Integer> filas=new HashSet<Integer>();
             Set<Integer> columnas=new HashSet<Integer>();
 
-            /*for(Bola bola: arrayListBolasSeleccionadas){
-                filas.add(bola.getFila());
-                columnas.add(bola.getColumna());
-            }*/
+            for(Bola bolaParaObtenerFilaColumna: arrayListBolasSeleccionadas){
+                filas.add(bolaParaObtenerFilaColumna.getFila());
+                columnas.add( bolaParaObtenerFilaColumna.getColumna());
+            }
+            if(!comprobarSiTodasLasBolasSOnDelMismoColor(arrayListBolasSeleccionadas)){
+                //System.out.println("Hay una bola de otro color");
 
+            }else if(filas.size()!=2 || columnas.size()!=2){
+               // System.out.println("No has seleccionado de la misma fila o columna.");
+            }else{
+                puntuacion.incrementarPuntuacion(100);
+                //Sacamos la celda que hemos pulsado y hemos acertado
+                //la única forma de ver los valores de la celda (las x y la y) qye metimos
+                //cuando creamos la bola es esta:
+                Integer[] valoresFilas=filas.toArray(new Integer[2]);
+                Integer[] valoresColumnaa=columnas.toArray(new Integer[2]);
+                //Esto te da las esquinas:
+                int minX=Math.min(valoresFilas[0], valoresColumnaa[1]);
+                int maxX=Math.min(valoresFilas[0], valoresColumnaa[1]);
+                int minY=Math.min(valoresFilas[0], valoresColumnaa[1]);
+                int maxY=Math.min(valoresFilas[0], valoresColumnaa[1]);
+            }
 
             for(Bola bolaParaVaciar: arrayListBolasSeleccionadas){
                 bolaParaVaciar.setBolaSeleccionada(false);

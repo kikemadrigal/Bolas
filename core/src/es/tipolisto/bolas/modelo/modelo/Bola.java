@@ -86,12 +86,14 @@ public class Bola extends Actor {
         @Override
         public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
            // System.out.println("pinchado en "+Gdx.input.getX()+", "+Gdx.input.getY()+"bola: "+obtenerColor());
-            if(bolaSeleccionada){
+            bolaSeleccionada=!bolaSeleccionada;
+            partida.bolaSeleccionada(bola);
+           /* if(bolaSeleccionada){
                 bolaSeleccionada=false;
             }else{
                 bolaSeleccionada=true;
                 partida.bolaSeleccionada(bola);
-            }
+            }*/
             // bolaSeleccionada=!bolaSeleccionada;
             return true;
         }

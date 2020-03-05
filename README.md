@@ -7,7 +7,7 @@ Bolas es un juego creado con el motor libgdx, te animoa probar este motor, ve a 
 Libgdx te permite crear juegos para diferentes plataformas (Android, IOS, desktop, web) utilizando código Java.
 
 # Instalación
-Necesitarás Gradle-2.2 ![Gradle 2.2](https://gradle.org/next-steps/?version=2.2&format=all)
+Necesitarás![Gradle 2.2](https://gradle.org/next-steps/?version=2.2&format=all)
 Abre el código fuente con IntelliJ IDEA o Eclipse e importa el archivo build.gradle que está en la raiz
 
 
